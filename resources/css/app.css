@@ -1,0 +1,15 @@
+.header {
+    background-color: #1e1e1e;
+    padding: 15px 0
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+.clear-both {
+    clear: both;
+    display: inline-block;
+    width: 100%;
+}
