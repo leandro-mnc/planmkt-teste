@@ -38,7 +38,7 @@ jobs:
       shell: bash
 
     - name: Run tests
-      run: docker-compose exec server php artisan test
+      run: docker-compose exec -it server php artisan test
 
     - name: Stop containers
       if: always()
