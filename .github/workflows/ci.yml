@@ -27,7 +27,7 @@ jobs:
       run: npm install && composer install
 
     - name: Start Containers
-      run: docker-compose -f "docker-compose.yml" up -d --build
+      run: docker-compose -f "docker-compose.yaml" up -d --build
   
     - name: Sleep for 30 seconds
       run: sleep 30s
@@ -38,4 +38,4 @@ jobs:
 
     - name: Stop containers
       if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      run: docker-compose -f "docker-compose.yaml" down
