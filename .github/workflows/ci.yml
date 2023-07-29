@@ -26,7 +26,11 @@ jobs:
     - name: Install dependencies
       run: npm install && composer install
 
-    - name: Start Containers with Database Test Only
+    - name: Prepare .env
+      run: cp .env.example .env && php artisan key:generate
+      shell: bash
+
+    - name: Start Containers for tests
       run: docker-compose -f "docker-compose.yaml" up -d --build server db_test
   
     - name: Sleep for 30 seconds
@@ -38,4 +42,4 @@ jobs:
 
     - name: Stop containers
       if: always()
-      run: docker-compose -f "docker-compose.yaml" down
+      run: docker-compose -f "docker-compose.yaml" down && rm .env
