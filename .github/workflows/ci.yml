@@ -33,12 +33,12 @@ jobs:
     - name: Start Containers for tests
       run: docker-compose -f "docker-compose.yaml" up -d --build server db_test
   
-    - name: Sleep for 30 seconds
-      run: sleep 30s
+    - name: Sleep for 15 seconds
+      run: sleep 15s
       shell: bash
 
     - name: Run tests
-      run: docker-compose exec -it server php artisan test
+      run: docker-compose exec -i server php artisan test
 
     - name: Stop containers
       if: always()
