@@ -26,8 +26,8 @@ jobs:
     - name: Install dependencies
       run: npm install && composer install
 
-    - name: Start Containers
-      run: docker-compose -f "docker-compose.yaml" up -d --build
+    - name: Start Containers with Database Test Only
+      run: docker-compose -f "docker-compose.yaml" up -d --build server db_test
   
     - name: Sleep for 30 seconds
       run: sleep 30s
