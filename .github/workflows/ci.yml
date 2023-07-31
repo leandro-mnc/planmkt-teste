@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.2
+
+    - name: Install dependencies
+      run: npm install && composer install
+
+    - name: Prepare .env
+      run: cp .env.example .env && php artisan key:generate
+      shell: bash
+
+    - name: Start Containers for tests
+      run: docker-compose -f "docker-compose.yaml" up -d --build server db_test
+  
+    - name: Sleep for 15 seconds
+      run: sleep 15s
+      shell: bash
+
+    - name: Check PSR12
+      run: composer run php-check-lint
+
+    - name: Run tests
+      run: docker-compose exec -i server php artisan test
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yaml" down && rm .env
